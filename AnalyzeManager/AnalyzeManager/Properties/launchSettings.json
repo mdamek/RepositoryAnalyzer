@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "AnalyzeManager": {
+      "commandName": "Project",
+      "commandLineArgs": "C:\\repositories\\RepositoryAnalyzer\\CodeStatisticsOutput.txt"
+    }
+  }
+}
