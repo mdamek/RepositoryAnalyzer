@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
-using System.Web;
 using AnalyzeManager.Models;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace AnalyzeManager
@@ -20,6 +17,7 @@ namespace AnalyzeManager
             allFilesStatisticsRaw.First.Remove();
             allFilesStatisticsRaw.Last.Remove();
             var allFilesData = new List<FileCodeStatistics>();
+
             foreach (var (fullFileName, details) in allFilesStatisticsRaw)
             {
                 var fileCodeStatistics = new FileCodeStatistics()
@@ -39,6 +37,12 @@ namespace AnalyzeManager
                 .First()
                 .Language;
             var coreProjectFiles = allFilesData.Where(e => e.Language == largestAmountOfFilesLanguage).ToList();
+
+            foreach (var actualFile in allFilesData)
+            {
+                var path = actualFile.FileFullName;
+                var separatedValuesOfPath = path.Replace("\\\\", "\\").Split('\\');
+            }
         }
     }
 }

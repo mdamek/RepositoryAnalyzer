@@ -1,2 +1,5 @@
 param([string]$PathToFile)
-& '.\cloc-1.84.exe' $pathToFile --json --by-file > 'CodeStatisticsOutput.txt'
+$allContent =  &'.\cloc-1.84.exe' $pathToFile --json --by-file
+$path = $PathToFile.split('\')
+$root = $path[$path.count -1]
+$allContent.replace($pathToFile, $root) > 'CodeStatisticsOutput.txt'
