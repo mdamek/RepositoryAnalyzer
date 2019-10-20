@@ -1,10 +1,11 @@
+function drawCirclePacking(hierarchyBy){
 var svg = d3.select("svg"),
     width = +svg.attr("width"),
     height = +svg.attr("height");
 
 var color = d3.scaleLinear()
     .domain([0, 3])
-    .range(['grey', 'red']);
+    .range(['green', 'red']);
 
 var pack = d3.pack()
     .size([width - 2, height - 2])
@@ -12,8 +13,7 @@ var pack = d3.pack()
 
 d3.json("occupation.json").then(function (dataset) {
     var root = d3.hierarchy(dataset)
-        .sum(function (d) { return d.size; })
-        .sort(function (a, b) { return b.size - a.size || b.size - a.size; });
+        .sum(function (d) { return d[hierarchyBy]; });
     pack(root);
     console.log(root);
     var node = svg.select("g")
@@ -35,3 +35,17 @@ function hovered(hover) {
       d3.selectAll(d.ancestors().map(function(d) { return d.node; })).classed("node--hover", hover);
     };
   }
+}
+
+function doStatisticsByTotalCommitsNumber(){
+	let hierarchyBy = "size";
+	drawCirclePacking(hierarchyBy);
+	disableOneDecidingButton("totalCommitsButton");
+}
+
+function disableOneDecidingButton(buttonId){
+	$( document ).ready(function() {
+		$(".decidingButton").attr("disabled", false);
+		$("#".concat(buttonId)).attr("disabled", true);
+	});
+}

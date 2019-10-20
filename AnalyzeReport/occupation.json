@@ -1,6 +1,8 @@
 {
  "name": "occupation",
  "children": [
+ {
+   "name": "Wholesale and retail buyers, except farm products", "ID": "1.1.2.3", "size":216},
   {
    "name": "Management, professional, and related occupations",
    "children": [

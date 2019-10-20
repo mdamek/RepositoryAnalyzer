@@ -4,12 +4,14 @@
 <head>
   <meta charset="utf-8">
   <title>AnalyzeReport</title>
-  <link rel="stylesheet" href="styles.css">
+  <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
   <script src="https://d3js.org/d3.v5.js"></script>
+  <script src="designer.js"></script>
+  <link rel="stylesheet" href="styles.css">
 </head>
 
-<body>
+<body onload="doStatisticsByTotalCommitsNumber()">
   <svg width="500" height="500"><g></g></svg>
-  <script src="designer.js"></script>
+  <button id="totalCommitsButton" class="decidingButton" onclick="doStatisticsByTotalCommitsNumber()" type="button">Total commits</button>
 </body>
 </html>
