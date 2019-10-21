@@ -11,9 +11,11 @@ var pack = d3.pack()
     .size([width - 2, height - 2])
     .padding(3)
 
-d3.json("occupation.json").then(function (dataset) {
+d3.json("abcde.json").then(function (dataset) {
+	console.log(dataset);
     var root = d3.hierarchy(dataset)
-        .sum(function (d) { return d[hierarchyBy]; });
+        .sum(function (d) { return d[hierarchyBy]; })
+		.sort(function(a, b) { return b[hierarchyBy] - a[hierarchyBy] || b[hierarchyBy] - a[hierarchyBy]; });
     pack(root);
     console.log(root);
     var node = svg.select("g")
@@ -38,7 +40,7 @@ function hovered(hover) {
 }
 
 function doStatisticsByTotalCommitsNumber(){
-	let hierarchyBy = "size";
+	let hierarchyBy = "code";
 	drawCirclePacking(hierarchyBy);
 	disableOneDecidingButton("totalCommitsButton");
 }
