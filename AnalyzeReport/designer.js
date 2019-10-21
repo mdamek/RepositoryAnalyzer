@@ -4,14 +4,14 @@ var svg = d3.select("svg"),
     height = +svg.attr("height");
 
 var color = d3.scaleLinear()
-    .domain([0, 3])
+    .domain([0, 5])
     .range(['green', 'red']);
 
 var pack = d3.pack()
     .size([width - 2, height - 2])
     .padding(3)
 
-d3.json("abcde.json").then(function (dataset) {
+d3.json('/OutputsFiles/FinalStatisticsOutput.json').then(function (dataset) {
 	console.log(dataset);
     var root = d3.hierarchy(dataset)
         .sum(function (d) { return d[hierarchyBy]; })

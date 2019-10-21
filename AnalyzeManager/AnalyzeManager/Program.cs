@@ -10,7 +10,7 @@ namespace AnalyzeManager
 {
     public class Program
     {
-        private static List<FileCodeStatistics> FileCodeStatisticses { get; set; }
+        private static List<FileCodeStatistics> FileCodeStatistics { get; set; }
         static void Main(string[] args)
         {
             var jsonStatisticsRaw = File.ReadAllText(args[0]);
@@ -20,7 +20,7 @@ namespace AnalyzeManager
             allFilesStatisticsRaw.First.Remove();
             allFilesStatisticsRaw.Last.Remove();
             var allFilesData = new List<FileCodeStatistics>();
-            FileCodeStatisticses = allFilesData;
+            FileCodeStatistics = allFilesData;
             foreach (var (fullFileName, details) in allFilesStatisticsRaw)
             {
                 var fileCodeStatistics = new FileCodeStatistics()
@@ -77,40 +77,40 @@ namespace AnalyzeManager
             var objectJsonWithoutArtificialRoot = objectJson["children"][0];
             GoRecursiveCreateLeafs(objectJsonWithoutArtificialRoot);
             var readyJson = JsonConvert.SerializeObject(objectJsonWithoutArtificialRoot);
-            File.WriteAllText("C:\\Repositories\\RepositoryAnalyzer\\AnalyzeReport\\abcde.json", readyJson);
+            File.WriteAllText(Directory.GetCurrentDirectory() + "\\..\\..\\..\\..\\..\\OutputsFiles\\FinalStatisticsOutput.json", readyJson);
         }
 
 
-        private static void GoRecursiveCreateLeafs(JToken jtoken)
+        private static void GoRecursiveCreateLeafs(JToken jToken)
         {
-            if (!jtoken["children"].Children().Any())
+            if (!jToken["children"].Children().Any())
             {
-                var name = jtoken["name"];
-                var dataToAppend = FileCodeStatisticses.First(e => e.FileFullName.Contains(name.ToString()));
+                var name = jToken["name"];
+                var dataToAppend = FileCodeStatistics.First(e => e.FileFullName.Contains(name.ToString()));
 
-                jtoken["children"].Parent.Remove();
+                jToken["children"].Parent.Remove();
                 foreach (var property in dataToAppend.GetType().GetProperties())
                 {
                     var isInt = int.TryParse(property.GetValue(dataToAppend).ToString(), out var intNumber);
                     var isDouble = double.TryParse(property.GetValue(dataToAppend).ToString(), out var doubleNumber);
                     if (isInt)
                     {
-                        jtoken[property.Name.ToLower()] = intNumber;
+                        jToken[property.Name.ToLower()] = intNumber;
                     }
                     else if (isDouble)
                     {
-                        jtoken[property.Name.ToLower()] = doubleNumber;
+                        jToken[property.Name.ToLower()] = doubleNumber;
                     }
                     else
                     {
-                        jtoken[property.Name.ToLower()] = property.GetValue(dataToAppend).ToString();
+                        jToken[property.Name.ToLower()] = property.GetValue(dataToAppend).ToString();
                     }
                 }
                 return;
             }
-            foreach (var nestedJtoken in jtoken["children"].Children())
+            foreach (var nestedJToken in jToken["children"].Children())
             {
-                GoRecursiveCreateLeafs(nestedJtoken);
+                GoRecursiveCreateLeafs(nestedJToken);
             }
         }
     }
