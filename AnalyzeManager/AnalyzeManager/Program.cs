@@ -11,6 +11,7 @@ namespace AnalyzeManager
     public class Program
     {
         private static List<FileCodeStatistics> FileCodeStatistics { get; set; }
+
         static void Main(string[] args)
         {
             var jsonStatisticsRaw = File.ReadAllText(args[0]);
@@ -21,6 +22,15 @@ namespace AnalyzeManager
             allFilesStatisticsRaw.Last.Remove();
             var allFilesData = new List<FileCodeStatistics>();
             FileCodeStatistics = allFilesData;
+
+            var editedFiles = new Dictionary<string, int>();
+
+
+            
+            
+
+
+
             foreach (var (fullFileName, details) in allFilesStatisticsRaw)
             {
                 var fileCodeStatistics = new FileCodeStatistics()
@@ -33,6 +43,9 @@ namespace AnalyzeManager
                 };
                 allFilesData.Add(fileCodeStatistics);
             }
+
+            var gitConnector = new GitConnector("C:\\repositories\\FluentTerminal");
+            gitConnector.AddCommitsNumbersToFiles(allFilesData);
 
             var largestAmountOfFilesLanguage = allFilesData
                 .GroupBy(e => e.Language)
@@ -106,8 +119,10 @@ namespace AnalyzeManager
                         jToken[property.Name.ToLower()] = property.GetValue(dataToAppend).ToString();
                     }
                 }
+
                 return;
             }
+
             foreach (var nestedJToken in jToken["children"].Children())
             {
                 GoRecursiveCreateLeafs(nestedJToken);
