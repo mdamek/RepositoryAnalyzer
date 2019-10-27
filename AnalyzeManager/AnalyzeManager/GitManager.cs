@@ -6,18 +6,18 @@ using LibGit2Sharp;
 
 namespace AnalyzeManager
 {
-    public class GitConnector
+    public class GitManager
     {
-        private string pathToLocalRepository;
+        private readonly string _pathToLocalRepository;
 
-        public GitConnector(string pathToRepository)
+        public GitManager(string pathToRepository)
         {
-            pathToLocalRepository = pathToRepository;
+            _pathToLocalRepository = pathToRepository;
         }
 
-        public void AddCommitsNumbersToFiles(List<FileCodeStatistics> filesContainer)
+        public List<FileCodeStatistics> AddCommitsNumbersToFiles(List<FileCodeStatistics> filesContainer)
         {
-            using (var repo = new Repository(pathToLocalRepository))
+            using (var repo = new Repository(_pathToLocalRepository))
             {
                 var allCommits = repo.Commits;
                 foreach (var commit in allCommits)
@@ -42,9 +42,10 @@ namespace AnalyzeManager
                     }
                    
                 }
-
-                var asdasd = filesContainer.OrderByDescending(e => e.AllCommitsNumber).ToList();
+;
             }
+
+            return filesContainer;
         }
 
     }
