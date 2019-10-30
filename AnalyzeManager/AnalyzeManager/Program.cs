@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -19,14 +20,12 @@ namespace AnalyzeManager
             var allFilesStatistics = jsonFormatter.ConvertJsonToPlainObjectRepresentation(readableJson);
             var statisticsTransform = new StatisticsDataObjectsTransform();
             var allFilesData = statisticsTransform.GenerateStatisticsContainer(allFilesStatistics);
-            //"C:\\repositories\\FluentTerminal"
             var gitConnector = new GitManager(pathToTestedRepository);
             var filesStatisticsWithCommits = gitConnector.AddCommitsNumbersToFiles(allFilesData);
-
             var readyTreeObjectStructure = statisticsTransform.GenerateTreeObjectStructureFromPaths(filesStatisticsWithCommits);
-
             var allStatistics = JsonConvert.SerializeObject(readyTreeObjectStructure);
-            File.WriteAllText(Directory.GetCurrentDirectory() + "\\..\\..\\..\\..\\..\\OutputsFiles\\FinalStatisticsOutput.json", allStatistics);
+
+            File.WriteAllText(Directory.GetCurrentDirectory() + "\\OutputsFiles\\FinalStatisticsOutput.json", allStatistics);
         }
 
 
