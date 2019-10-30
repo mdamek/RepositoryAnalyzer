@@ -3,21 +3,18 @@ var svg = d3.select("svg"),
     width = +svg.attr("width"),
     height = +svg.attr("height");
 
-var color = d3.scaleLinear()
-    .domain([0, 5])
-    .range(['green', 'red']);
+
 
 var pack = d3.pack()
     .size([width - 2, height - 2])
     .padding(3)
 
 d3.json('/OutputsFiles/FinalStatisticsOutput.json').then(function (dataset) {
-	console.log(dataset);
+    console.log(dataset);
     var root = d3.hierarchy(dataset)
         .sum(function (d) { return d[hierarchyBy]; })
 		.sort(function(a, b) { return b[hierarchyBy] - a[hierarchyBy] || b[hierarchyBy] - a[hierarchyBy]; });
     pack(root);
-    console.log(root);
     var node = svg.select("g")
         .selectAll("g")
         .data(root.descendants())
@@ -30,7 +27,14 @@ d3.json('/OutputsFiles/FinalStatisticsOutput.json').then(function (dataset) {
     node.append("circle")
         .attr("id", function (d) { return "node-" + d.id; })
         .attr("r", function (d) { return d.r; })
-        .style("fill", function (d) { return color(d.depth); });
+        .style("fill", function (d) { 
+            if(d.height === 0){
+                return decideAboutColor(d.data.hierarchyBy, true);
+            }
+            else{
+                return decideAboutColor(d.depth, false, );
+            }
+         });
 }) 
 function hovered(hover) {
     return function(d) {
@@ -50,4 +54,22 @@ function disableOneDecidingButton(buttonId){
 		$(".decidingButton").attr("disabled", false);
 		$("#".concat(buttonId)).attr("disabled", true);
 	});
+}
+
+function decideAboutColor(value, isLeaf, minHierarchyValue, maxHierarchyValue){
+    if(isLeaf === true){
+        var color = d3.scaleLinear()
+    .domain([minHierarchyValue, maxHierarchyValue])
+    .range(['#ffd369', '#940a37']);
+    return color(value);
+    }
+    else{
+        var color = d3.scaleLinear()
+    .domain([minHierarchyValue, maxHierarchyValue])
+    .range(['#ecfcff', '#5edfff']);
+    return color(value);
+    }
+
+
+    
 }

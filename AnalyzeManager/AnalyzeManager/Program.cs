@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Linq;
 using Newtonsoft.Json;
 
 namespace AnalyzeManager
@@ -17,6 +18,11 @@ namespace AnalyzeManager
             var gitConnector = new GitManager(pathToTestedRepository);
             var filesStatisticsWithCommits = gitConnector.AddCommitsNumbersToFiles(allFilesData);
             var readyTreeObjectStructure = statisticsTransform.GenerateTreeObjectStructureFromPaths(filesStatisticsWithCommits);
+            readyTreeObjectStructure.AddAfterSelf(new
+            {
+                minAllCommitsValue = filesStatisticsWithCommits.Min(e => e.AllCommitsNumber),
+                maxAllCommitsValue = filesStatisticsWithCommits.Max(e => e.AllCommitsNumber)
+            });
             var allStatistics = JsonConvert.SerializeObject(readyTreeObjectStructure);
 
             File.WriteAllText(Directory.GetCurrentDirectory() + "\\OutputsFiles\\FinalStatisticsOutput.json", allStatistics);
