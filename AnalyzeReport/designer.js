@@ -40,7 +40,7 @@ function hovered(hover) {
 }
 
 function doStatisticsByTotalCommitsNumber(){
-	let hierarchyBy = "code";
+	let hierarchyBy = "allcommitsnumber";
 	drawCirclePacking(hierarchyBy);
 	disableOneDecidingButton("totalCommitsButton");
 }

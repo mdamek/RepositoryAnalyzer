@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text.RegularExpressions;
-using AnalyzeManager.Models;
+﻿using System.IO;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 
 namespace AnalyzeManager
 {
@@ -29,7 +23,7 @@ namespace AnalyzeManager
         }
 
 
-        
+
 
     }
 }
