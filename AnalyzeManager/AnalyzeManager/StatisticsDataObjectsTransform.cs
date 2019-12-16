@@ -8,26 +8,26 @@ namespace AnalyzeManager
 {
     public class StatisticsDataObjectsTransform
     {
-        private static List<FileCodeStatistics> FileCodeStatistics { get; set; }
-        public List<FileCodeStatistics> GenerateStatisticsContainer(JObject allFilesStatistics)
+        private static List<FileCoreStatistics> FileCodeStatistics { get; set; }
+        public List<FileCoreStatistics> GenerateStatisticsContainer(JObject allFilesStatistics)
         {
-            var allFilesData = new List<FileCodeStatistics>();
-            foreach (var (fullFileName, details) in allFilesStatistics)
+            var allFilesData = new List<FileCoreStatistics>();
+            foreach (var fileStatistic in allFilesStatistics)
             {
-                var fileCodeStatistics = new FileCodeStatistics
+                var fileCodeStatistics = new FileCoreStatistics
                 {
-                    Code = int.Parse(details["code"].ToString()),
-                    Blank = int.Parse(details["blank"].ToString()),
-                    Comment = int.Parse(details["comment"].ToString()),
-                    Language = details["language"].ToString(),
-                    FileFullName = fullFileName
+                    Code = int.Parse(fileStatistic.Value["code"].ToString()),
+                    Blank = int.Parse(fileStatistic.Value["blank"].ToString()),
+                    Comment = int.Parse(fileStatistic.Value["comment"].ToString()),
+                    Language = fileStatistic.Value["language"].ToString(),
+                    FileFullName = fileStatistic.Key
                 };
                 allFilesData.Add(fileCodeStatistics);
             }
             return allFilesData;
         }
 
-        public List<FileCodeStatistics> GetFilesWithHighestNumberOfLanguageFiles(List<FileCodeStatistics> allFilesData)
+        public List<FileCoreStatistics> GetFilesWithHighestNumberOfLanguageFiles(List<FileCoreStatistics> allFilesData)
         {
             var largestAmountOfFilesLanguage = allFilesData
                 .GroupBy(e => e.Language)
@@ -38,7 +38,7 @@ namespace AnalyzeManager
             return allFilesData.Where(e => e.Language == largestAmountOfFilesLanguage).ToList();
         }
 
-        public JToken GenerateTreeObjectStructureFromPaths(List<FileCodeStatistics> allFilesData)
+        public JToken GenerateTreeObjectStructureFromPaths(List<FileCoreStatistics> allFilesData)
         {
             FileCodeStatistics = allFilesData; 
             void GoInsideTree(Node node, IEnumerable<string> pathParts)

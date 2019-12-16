@@ -14,7 +14,7 @@ namespace AnalyzeManager
             _pathToLocalRepository = pathToRepository;
         }
 
-        public List<FileCodeStatistics> AddCommitsNumbersToFiles(List<FileCodeStatistics> filesContainer)
+        public List<FileCoreStatistics> AddCommitsNumbersToFiles(List<FileCoreStatistics> filesContainer)
         {
             using (var repo = new Repository(_pathToLocalRepository))
             {
@@ -43,17 +43,17 @@ namespace AnalyzeManager
             return filesContainer;
         }
 
-        private void AddChangeToFile(string changedFileName, List<FileCodeStatistics> filesContainer)
+        private void AddChangeToFile(string changedFileName, List<FileCoreStatistics> filesContainer)
         {
-            if (filesContainer.Any(e => e.FileFullName.Split("\\").Last() == changedFileName))
+            if (filesContainer.Any(e => e.FileFullName.Split('\\').Last() == changedFileName))
             {
                 var changedFileIndex =
-                    filesContainer.FindIndex(e => e.FileFullName.Split("\\").Last() == changedFileName);
+                    filesContainer.FindIndex(e => e.FileFullName.Split('\\').Last() == changedFileName);
                 filesContainer[changedFileIndex].AllCommitsNumber += 1;
             }
         }
 
-        private void LocateChangedFiles(TreeEntry treeEntry, List<FileCodeStatistics> filesContainer)
+        private void LocateChangedFiles(TreeEntry treeEntry, List<FileCoreStatistics> filesContainer)
         {
             if (treeEntry.Mode == Mode.Directory)
             {
