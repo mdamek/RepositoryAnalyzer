@@ -8,6 +8,5 @@
         public int Comment { get; set; }
         public string Language { get; set; }
         public int AllCommitsNumber { get; set; }
-        public int FixCommitsNumber { get; set; }
     }
 }
