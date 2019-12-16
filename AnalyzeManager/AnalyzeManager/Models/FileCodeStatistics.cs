@@ -1,6 +1,6 @@
 ﻿namespace AnalyzeManager.Models
 {
-    public class FileCoreStatistics
+    public class FileCodeStatistics
     {
         public string FileFullName { get; set; }
         public int Code { get; set; }
