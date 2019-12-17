@@ -8,13 +8,13 @@ namespace AnalyzeManager
 {
     public class StatisticsDataObjectsTransform
     {
-        private static List<FileCodeStatistics> FileCodeStatistics { get; set; }
-        public List<FileCodeStatistics> GenerateStatisticsContainer(JObject allFilesStatistics)
+        private static List<AllMetricsModel> FileCodeStatistics { get; set; }
+        public List<AllMetricsModel> GenerateStatisticsContainer(JObject allFilesStatistics)
         {
-            var allFilesData = new List<FileCodeStatistics>();
+            var allFilesData = new List<AllMetricsModel>();
             foreach (var (fullFileName, details) in allFilesStatistics)
             {
-                var fileCodeStatistics = new FileCodeStatistics
+                var fileCodeStatistics = new AllMetricsModel
                 {
                     Code = int.Parse(details["code"].ToString()),
                     Blank = int.Parse(details["blank"].ToString()),
@@ -27,21 +27,10 @@ namespace AnalyzeManager
             return allFilesData;
         }
 
-        public List<FileCodeStatistics> GetFilesWithHighestNumberOfLanguageFiles(List<FileCodeStatistics> allFilesData)
-        {
-            var largestAmountOfFilesLanguage = allFilesData
-                .GroupBy(e => e.Language)
-                .First(c => c.Count() == allFilesData.GroupBy(e => e.Language)
-                                .Select(e => e.Count()).Max())
-                .First()
-                .Language;
-            return allFilesData.Where(e => e.Language == largestAmountOfFilesLanguage).ToList();
-        }
-
-        public JToken GenerateTreeObjectStructureFromPaths(List<FileCodeStatistics> allFilesData)
+        public JToken GenerateTreeObjectStructureFromPaths(List<AllMetricsModel> allFilesData)
         {
             FileCodeStatistics = allFilesData; 
-            void GoInsideTree(Node node, IEnumerable<string> pathParts)
+            void GoInsideTree(TreeNode node, IEnumerable<string> pathParts)
             {
                 var paths = pathParts.ToList();
                 if (!paths.Any()) return;
@@ -49,10 +38,10 @@ namespace AnalyzeManager
                 var child = node.Children.SingleOrDefault(x => x.Name == name);
                 if (child == null)
                 {
-                    child = new Node
+                    child = new TreeNode
                     {
                         Name = name,
-                        Children = new List<Node>(),
+                        Children = new List<TreeNode>(),
                     };
                     node.Children.Add(child);
                 }
@@ -60,7 +49,7 @@ namespace AnalyzeManager
                 GoInsideTree(child, paths.Skip(1));
             }
 
-            var rootNode = new Node { Name = "/", Children = new List<Node>() };
+            var rootNode = new TreeNode { Name = "/", Children = new List<TreeNode>() };
 
             foreach (var actualFile in allFilesData)
             {

@@ -14,7 +14,7 @@ namespace AnalyzeManager
             _pathToLocalRepository = pathToRepository;
         }
 
-        public List<FileCodeStatistics> AddCommitsNumbersToFiles(List<FileCodeStatistics> filesContainer)
+        public List<AllMetricsModel> AddCommitsNumbersToFiles(List<AllMetricsModel> filesContainer)
         {
             using (var repo = new Repository(_pathToLocalRepository))
             {
@@ -43,7 +43,7 @@ namespace AnalyzeManager
             return filesContainer;
         }
 
-        private void AddChangeToFile(string changedFileName, List<FileCodeStatistics> filesContainer)
+        private void AddChangeToFile(string changedFileName, List<AllMetricsModel> filesContainer)
         {
             if (filesContainer.Any(e => e.FileFullName.Split("\\").Last() == changedFileName))
             {
@@ -53,7 +53,7 @@ namespace AnalyzeManager
             }
         }
 
-        private void LocateChangedFiles(TreeEntry treeEntry, List<FileCodeStatistics> filesContainer)
+        private void LocateChangedFiles(TreeEntry treeEntry, List<AllMetricsModel> filesContainer)
         {
             if (treeEntry.Mode == Mode.Directory)
             {
