@@ -1,6 +1,12 @@
-param([string]$PathToFile)
-$allContent =  &'.\cloc-1.84.exe' $pathToFile --json --by-file
-$path = $PathToFile.split('\')
+param([string]$FolderPath)
+$FileExtension = ".sln"
+$solutionPath = Get-ChildItem -Path $FolderPath -Recurse -ErrorAction SilentlyContinue -Filter *$FileExtension |
+Where-Object { $_.Extension -eq $FileExtension } | Select-Object Select -ExpandProperty FullName
+$codeLinesCalculions =  &'.\cloc-1.84.exe' $FolderPath --json --by-file
+$path = $FolderPath.split('\')
 $root = $path[$path.count -1]
-$allContent.replace($pathToFile, $root) > 'OutputsFiles\CodeStatisticsOutput.txt'
-& 'AnalyzeManager\build\AnalyzeManager.exe' 'OutputsFiles\CodeStatisticsOutput.txt' $PathToFile
+& 'BasicMetricsCalculator\Metrics.exe' "/solution:$solutionPath"  '/out:OutputsFiles\BasicMetrics.xml'
+$codeLinesCalculions.replace($FolderPath, $root) > 'OutputsFiles\CodeStatisticsOutput.txt'
+Write-Host 'Calculating lines of code...'
+& 'AnalyzeManager\build\AnalyzeManager.exe' 'OutputsFiles\CodeStatisticsOutput.txt' $FolderPath
+Write-Host 'All statistics of'$solutionPath ' solution are ready.'
