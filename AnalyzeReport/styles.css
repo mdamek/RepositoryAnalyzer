@@ -8,6 +8,42 @@ body {
   stroke-width: 1.2px;
 }
 
-.decidingButton {
-  position: absolute;
+.btn-group button {
+  background-color: #4CAF50;
+  border: 1px solid green;
+  color: white;
+  padding: 10px 10px;
+  cursor: pointer;
+  float: left;
+}
+
+.btn-group button:not(:last-child) {
+  border-right: none;
+}
+
+.btn-group:after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.btn-group button:hover {
+  background-color: #3e8e41;
+}
+
+.column {
+  float: left;
+  width: 50%;
+}
+
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.active {
+  background-color: #666 !important;
+  color: white;
+  border: 1px solid red;
 }

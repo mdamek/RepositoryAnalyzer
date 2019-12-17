@@ -10,8 +10,21 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 
-<body onload="doStatisticsByTotalCommitsNumber()">
-  <svg width="500" height="500"><g></g></svg>
-  <button id="totalCommitsButton" class="decidingButton" onclick="doStatisticsByTotalCommitsNumber()" type="button">Total commits</button>
+<body onload="go('code')">
+    <div class="row">
+        <div class="column"><svg width="900" height="900"><g></g></svg></div>
+        <div class="column">
+            <div id="buttons" class="btn-group">
+                <button id="codeLinesButton" class="decidingButton active" onclick="doStatisticsBy('code')" type="button">Code lines</button>
+                <button id="commentsButton" class="decidingButton" onclick="doStatisticsBy('comment')" type="button">Comments</button>
+                <button id="totalCommitsButton" class="decidingButton" onclick="doStatisticsBy('allcommitsnumber')" type="button">Commits - hotspots</button>
+                <button id="maintainabilityIndexButton" class="decidingButton" onclick="go('maintainabilityindex')" type="button">Maintainability index</button>
+                <button id="cyclomaticComplexityButton" class="decidingButton" onclick="doStatisticsBy('cyclomaticcomplexity')" type="button">Cyclomatic complexity</button>
+                <button id="classCouplingButton" class="decidingButton" onclick="doStatisticsBy('classcoupling')" type="button">Class coupling</button>
+                <button id="depthOfInheritanceButton" class="decidingButton" onclick="doStatisticsBy('depthofinheritance')" type="button">Depth of inheritance</button>
+                <button id="aggregationButton" class="decidingButton" onclick="doStatisticsBy()" type="button">Aggregation</button>
+            </div>
+        </div>
+      </div>
 </body>
 </html>

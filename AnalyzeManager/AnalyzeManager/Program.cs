@@ -74,7 +74,7 @@ namespace AnalyzeManager
             var readyTreeObjectStructure = statisticsTransform.GenerateTreeObjectStructureFromPaths(finalEntities);
             var allStatistics = JsonConvert.SerializeObject(readyTreeObjectStructure);
 
-            File.WriteAllText(Directory.GetCurrentDirectory() + "\\..\\..\\..\\..\\..\\OutputsFiles\\FinalStatisticsOutput.json", allStatistics);
+            File.WriteAllText(Directory.GetCurrentDirectory() + "\\OutputsFiles\\FinalStatisticsOutput.json", allStatistics);
         }
 
 
