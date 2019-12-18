@@ -17,9 +17,7 @@ namespace AnalyzeManager
                 var fileCodeStatistics = new AllMetricsModel
                 {
                     Code = int.Parse(details["code"].ToString()),
-                    Blank = int.Parse(details["blank"].ToString()),
                     Comment = int.Parse(details["comment"].ToString()),
-                    Language = details["language"].ToString(),
                     FileFullName = fullFileName
                 };
                 allFilesData.Add(fileCodeStatistics);

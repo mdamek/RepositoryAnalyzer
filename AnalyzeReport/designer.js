@@ -1,10 +1,10 @@
 function drawCirclePacking(hierarchyBy){
     d3.selectAll("g > *").remove()
-var svg = d3.select("svg"),
+var svg = d3.select("#mainChart"),
     width = +svg.attr("width"),
     height = +svg.attr("height");
     var ranges;
-    $.ajax ({ url: "ScalesRanges.json", method: "GET", async: false})
+    $.ajax ({ url: "CompartmentValues.json", method: "GET", async: false})
     .success(function (response) {
         ranges = response;
     });
@@ -47,6 +47,24 @@ d3.json('/OutputsFiles/FinalStatisticsOutput.json').then(function (dataset) {
     .attr('dx', function(d) { !d.children ? 0 : d.r })
     .attr('dy', function(d) { !d.children ? 0 : d.r })
     .attr('textLength', function(d) { return !d.children ? d.r * 2 : d.r; })
+
+
+    var svg2 = d3.select("#colorScale")
+    .append("g")
+    var colorScale = d3.scaleLinear()
+    .domain(ranges[hierarchyBy].range)
+    .range(ranges[hierarchyBy].colors);
+    var distance = 900/ranges[hierarchyBy].range[ranges[hierarchyBy].range.length -1];
+
+    var bars = svg2.selectAll(".bars")
+    .data(d3.range(0, 900), function(d) { return distance; })
+  .enter().append("rect")
+    .attr("class", "bars")
+    .attr("x", function(d, i) { return i; })
+    .attr("y", 0)
+    .attr("height", 35)
+    .attr("width", 10)
+    .style("fill", function(d, i ) { return colorScale(d * distance); })
 	
 }) 
 function hovered(hover) {

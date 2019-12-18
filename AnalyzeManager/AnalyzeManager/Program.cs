@@ -44,6 +44,7 @@ namespace AnalyzeManager
 
             var filesWithoutMetrics = new List<string>();
             var finalEntities = new List<AllMetricsModel>();
+
             foreach (var xmlMetricsModel in basicMetrics)
             {
                 if (filesStatisticsWithCommits.Any(e => e.FileFullName.Split("\\").Last().Contains(xmlMetricsModel.Name)))
@@ -52,17 +53,15 @@ namespace AnalyzeManager
                     finalEntities.Add(new AllMetricsModel
                     {
                         AllCommitsNumber = filesStatisticsWithCommits[elementIndex].AllCommitsNumber,
-                        Blank = filesStatisticsWithCommits[elementIndex].Blank,
                         Code = filesStatisticsWithCommits[elementIndex].Code,
                         Comment = filesStatisticsWithCommits[elementIndex].Comment,
                         FileFullName = filesStatisticsWithCommits[elementIndex].FileFullName,
-                        Language = filesStatisticsWithCommits[elementIndex].Language,
                         ClassCoupling = xmlMetricsModel.ClassCoupling,
                         CyclomaticComplexity = xmlMetricsModel.CyclomaticComplexity,
                         DepthOfInheritance = xmlMetricsModel.DepthOfInheritance,
-                        ExecutableLines = xmlMetricsModel.ExecutableLines,
                         TypeName = xmlMetricsModel.Name,
-                        MaintainabilityIndex = xmlMetricsModel.MaintainabilityIndex
+                        MaintainabilityIndex = xmlMetricsModel.MaintainabilityIndex,
+                        BadQualityMetricsNumber = 0
                     });
                 }
                 else
@@ -71,14 +70,32 @@ namespace AnalyzeManager
                 }
             }
 
+            CalculateNumberBadQualityMetrics(finalEntities);
+
+            var additionalInformationsCreator = new AdditionalInformationsCreator();
+            additionalInformationsCreator.SaveToFileAllCompartments(finalEntities);
+            additionalInformationsCreator.SaveToFileRawDataJson(finalEntities);
+
             var readyTreeObjectStructure = statisticsTransform.GenerateTreeObjectStructureFromPaths(finalEntities);
             var allStatistics = JsonConvert.SerializeObject(readyTreeObjectStructure);
 
             File.WriteAllText(Directory.GetCurrentDirectory() + "\\OutputsFiles\\FinalStatisticsOutput.json", allStatistics);
         }
 
-
-
-
+        private static void CalculateNumberBadQualityMetrics(List<AllMetricsModel> finalEntities)
+        {
+            foreach (var finalEntity in finalEntities)
+            {
+                if (finalEntity.ClassCoupling > 50) finalEntity.BadQualityMetricsNumber++;
+                if (finalEntity.DepthOfInheritance >= 6) finalEntity.BadQualityMetricsNumber++;
+                if (finalEntity.CyclomaticComplexity >= 10) finalEntity.BadQualityMetricsNumber++;
+                if (finalEntity.MaintainabilityIndex <= 10) finalEntity.BadQualityMetricsNumber++;
+                if (finalEntity.AllCommitsNumber > finalEntities.Select(e => e.AllCommitsNumber).Average() * 3 / 4)
+                    finalEntity.BadQualityMetricsNumber++;
+                if (finalEntity.Comment > 0) finalEntity.BadQualityMetricsNumber++;
+                if (finalEntity.Code > finalEntities.Select(e => e.Code).Average() * 3 / 4)
+                    finalEntity.BadQualityMetricsNumber++;
+            }
+        }
     }
 }

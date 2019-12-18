@@ -12,7 +12,12 @@
 
 <body onload="go('code')">
     <div class="row">
-        <div class="column"><svg width="900" height="900"><g></g></svg></div>
+        <div class="column">
+            <svg id="mainChart" width="900" height="900">
+                <g></g>
+            </svg>
+            <svg id="colorScale" width="900" height="35"></svg>
+        </div>
         <div class="column">
             <div id="buttons" class="btn-group">
                 <button id="codeLinesButton" class="decidingButton active" onclick="doStatisticsBy('code')" type="button">Code lines</button>
@@ -22,7 +27,7 @@
                 <button id="cyclomaticComplexityButton" class="decidingButton" onclick="doStatisticsBy('cyclomaticcomplexity')" type="button">Cyclomatic complexity</button>
                 <button id="classCouplingButton" class="decidingButton" onclick="doStatisticsBy('classcoupling')" type="button">Class coupling</button>
                 <button id="depthOfInheritanceButton" class="decidingButton" onclick="doStatisticsBy('depthofinheritance')" type="button">Depth of inheritance</button>
-                <button id="aggregationButton" class="decidingButton" onclick="doStatisticsBy()" type="button">Aggregation</button>
+                <button id="aggregationButton" class="decidingButton" onclick="doStatisticsBy('badqualitymetricsnumber')" type="button">Aggregation</button>
             </div>
         </div>
       </div>
