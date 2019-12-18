@@ -59,8 +59,12 @@ namespace AnalyzeManager
 
         public void SaveToFileRawDataJson(List<AllMetricsModel> allMetricsModels)
         {
+            foreach (var metricsModel in allMetricsModels)
+            {
+                metricsModel.NameWithType = metricsModel.FileFullName.Split("\\").Last();
+            }
             var jsonList = JsonConvert.SerializeObject(allMetricsModels);
-            File.WriteAllText(Directory.GetCurrentDirectory() + "\\OutputsFiles\\MetricsRaw.json", jsonList);
+            File.WriteAllText(Directory.GetCurrentDirectory() + "\\AnalyzeReport\\MetricsRaw.json", jsonList);
         }
     }
 }

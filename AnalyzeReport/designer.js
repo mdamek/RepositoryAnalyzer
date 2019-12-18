@@ -94,6 +94,58 @@ function drawCirclesPacks(value, minHierarchyValue, maxHierarchyValue){
 
 
 $(document).ready(function(){
+
+    var rawData;
+    $.ajax ({ url: "MetricsRaw.json", method: "GET", async: false})
+    .success(function (response) {
+        rawData = response;
+    });
+
+    $('#rawDataTable').DataTable( {
+        data: rawData,
+        "pageLength": 30,
+        columns: [
+            {   
+                title: "Name",
+                data: "NameWithType"},
+            {
+                title: "LOC",
+                data: "Code"
+            },
+            {
+                title: "Comments",
+                data: "Comment"
+            },
+            {
+                title: "Commits",
+                data: "AllCommitsNumber"
+            },
+            {
+                title: "MI",
+                data: "MaintainabilityIndex"
+            },
+            {
+                title: "Cyclo",
+                data: "CyclomaticComplexity"
+            },
+            {
+                title: "CC",
+                data: "ClassCoupling"
+            },
+            {
+                title: "DiT",
+                data: "DepthOfInheritance"
+            },
+            {
+                title: "All",
+                data: "BadQualityMetricsNumber"
+            },
+
+        ],
+        
+        
+        });
+
 var btnContainer = document.getElementById("buttons");
 
 var btns = btnContainer.getElementsByClassName("decidingButton");

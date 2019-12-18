@@ -18,7 +18,7 @@ namespace AnalyzeManager
                 {
                     Code = int.Parse(details["code"].ToString()),
                     Comment = int.Parse(details["comment"].ToString()),
-                    FileFullName = fullFileName
+                    FileFullName = fullFileName,
                 };
                 allFilesData.Add(fileCodeStatistics);
             }

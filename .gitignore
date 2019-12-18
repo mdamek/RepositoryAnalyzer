@@ -9,6 +9,9 @@
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
 package-lock.json
+AnalyzeReport/CompartmentValues.json
+CompartmentValues.json
+MetricsRaw.json
 
 OutputsFiles/
 AnalyzeManager/build
