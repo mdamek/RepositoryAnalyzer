@@ -15,8 +15,8 @@ var pack = d3.pack()
 
 d3.json('/OutputsFiles/FinalStatisticsOutput.json').then(function (dataset) {
     var root = d3.hierarchy(dataset)
-        .sum(function (d) { return d[hierarchyBy]; })
-		.sort(function(a, b) { return b[hierarchyBy] - a[hierarchyBy] || b[hierarchyBy] - a[hierarchyBy]; });
+        .sum(function (d) { return d['code']; })
+		.sort(function(a, b) { return b['code'] - a['code'] || b['code'] - a['code']; });
     pack(root);
     var node = svg.select("g")
         .selectAll("g")
