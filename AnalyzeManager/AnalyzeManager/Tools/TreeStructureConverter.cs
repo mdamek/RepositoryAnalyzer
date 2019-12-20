@@ -4,30 +4,14 @@ using AnalyzeManager.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace AnalyzeManager
+namespace AnalyzeManager.Tools
 {
-    public class StatisticsDataObjectsTransform
+    public class TreeStructureConverter
     {
-        private static List<AllMetricsModel> FileCodeStatistics { get; set; }
-        public List<AllMetricsModel> GenerateStatisticsContainer(JObject allFilesStatistics)
+        public List<MetricsModel> Metrics { get; set; }
+        public JToken GenerateTreeObjectStructureFromPaths(List<MetricsModel> allFilesData)
         {
-            var allFilesData = new List<AllMetricsModel>();
-            foreach (var (fullFileName, details) in allFilesStatistics)
-            {
-                var fileCodeStatistics = new AllMetricsModel
-                {
-                    Code = int.Parse(details["code"].ToString()),
-                    Comment = int.Parse(details["comment"].ToString()),
-                    FileFullName = fullFileName,
-                };
-                allFilesData.Add(fileCodeStatistics);
-            }
-            return allFilesData;
-        }
-
-        public JToken GenerateTreeObjectStructureFromPaths(List<AllMetricsModel> allFilesData)
-        {
-            FileCodeStatistics = allFilesData; 
+            Metrics = allFilesData;
             void GoInsideTree(TreeNode node, IEnumerable<string> pathParts)
             {
                 var paths = pathParts.ToList();
@@ -64,12 +48,12 @@ namespace AnalyzeManager
             return ready;
         }
 
-        private static void GoRecursiveCreateLeafs(JToken jToken)
+        private void GoRecursiveCreateLeafs(JToken jToken)
         {
             if (!jToken["children"].Children().Any())
             {
                 var name = jToken["name"];
-                var dataToAppend = FileCodeStatistics.First(e => e.FileFullName.Contains(name.ToString()));
+                var dataToAppend = Metrics.First(e => e.FileFullName.Contains(name.ToString()));
 
                 jToken["children"].Parent.Remove();
                 foreach (var property in dataToAppend.GetType().GetProperties())

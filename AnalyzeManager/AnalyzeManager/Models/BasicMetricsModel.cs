@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace AnalyzeManager.Models
+﻿namespace AnalyzeManager.Models
 {
-    public class XmlMetricsModel
+    public class BasicMetricsModel
     {
         public string Name { get; set; }
         public int MaintainabilityIndex { get; set; }

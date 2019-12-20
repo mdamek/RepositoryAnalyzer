@@ -96,7 +96,7 @@ function drawCirclesPacks(value, minHierarchyValue, maxHierarchyValue){
 $(document).ready(function(){
 
     var rawData;
-    $.ajax ({ url: "MetricsRaw.json", method: "GET", async: false})
+    $.ajax ({ url: "MetricsRawToArray.json", method: "GET", async: false})
     .success(function (response) {
         rawData = response;
     });
@@ -107,7 +107,12 @@ $(document).ready(function(){
         columns: [
             {   
                 title: "Name",
-                data: "NameWithType"},
+                data: "TypeName"
+			},
+			{
+				title: "File",
+				data: "NameWithType"
+			},
             {
                 title: "LOC",
                 data: "Code"

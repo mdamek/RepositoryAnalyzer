@@ -11,7 +11,7 @@
 package-lock.json
 AnalyzeReport/CompartmentValues.json
 CompartmentValues.json
-MetricsRaw.json
+MetricsRawToArray.json
 
 OutputsFiles/
 AnalyzeManager/build

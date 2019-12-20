@@ -5,16 +5,16 @@ using LibGit2Sharp;
 
 namespace AnalyzeManager
 {
-    public class GitManager
+    public class GitProvider
     {
         private readonly string _pathToLocalRepository;
 
-        public GitManager(string pathToRepository)
+        public GitProvider(string pathToRepository)
         {
             _pathToLocalRepository = pathToRepository;
         }
 
-        public List<AllMetricsModel> AddCommitsNumbersToFiles(List<AllMetricsModel> filesContainer)
+        public List<MetricsModel> AddCommitsMetrics(List<MetricsModel> filesContainer)
         {
             using (var repo = new Repository(_pathToLocalRepository))
             {
@@ -43,7 +43,7 @@ namespace AnalyzeManager
             return filesContainer;
         }
 
-        private void AddChangeToFile(string changedFileName, List<AllMetricsModel> filesContainer)
+        private void AddChangeToFile(string changedFileName, List<MetricsModel> filesContainer)
         {
             if (filesContainer.Any(e => e.FileFullName.Split("\\").Last() == changedFileName))
             {
@@ -53,7 +53,7 @@ namespace AnalyzeManager
             }
         }
 
-        private void LocateChangedFiles(TreeEntry treeEntry, List<AllMetricsModel> filesContainer)
+        private void LocateChangedFiles(TreeEntry treeEntry, List<MetricsModel> filesContainer)
         {
             if (treeEntry.Mode == Mode.Directory)
             {

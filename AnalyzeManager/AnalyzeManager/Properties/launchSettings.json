@@ -2,7 +2,7 @@
   "profiles": {
     "AnalyzeManager": {
       "commandName": "Project",
-      "commandLineArgs": "C:\\repositories\\RepositoryAnalyzer\\OutputsFiles\\CodeStatisticsOutput.txt C:\\repositories\\FluentTerminal"
+      "commandLineArgs": "C:\\repositories\\RepositoryAnalyzer\\OutputsFiles C:\\repositories\\FluentTerminal"
     }
   }
 }

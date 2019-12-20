@@ -1,6 +1,6 @@
 ﻿namespace AnalyzeManager.Models
 {
-    public class AllMetricsModel
+    public class MetricsModel
     {
         public string FileFullName { get; set; }
         public int Code { get; set; }
