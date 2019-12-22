@@ -8,8 +8,8 @@ namespace AnalyzeManager.Tools
 {
     public class TreeStructureConverter
     {
-        public List<MetricsModel> Metrics { get; set; }
-        public JToken GenerateTreeObjectStructureFromPaths(List<MetricsModel> allFilesData)
+        private List<MetricsModel> Metrics { get; set; }
+        public JToken GenerateTreeStructureFromPaths(List<MetricsModel> allFilesData)
         {
             Metrics = allFilesData;
             void GoInsideTree(TreeNode node, IEnumerable<string> pathParts)
@@ -44,11 +44,11 @@ namespace AnalyzeManager.Tools
 
             var objectJson = JToken.Parse(rawJson);
             var ready = objectJson["children"][0];
-            GoRecursiveCreateLeafs(ready);
+            CreateLeaf(ready);
             return ready;
         }
 
-        private void GoRecursiveCreateLeafs(JToken jToken)
+        private void CreateLeaf(JToken jToken)
         {
             if (!jToken["children"].Children().Any())
             {
@@ -79,7 +79,7 @@ namespace AnalyzeManager.Tools
 
             foreach (var nestedJToken in jToken["children"].Children())
             {
-                GoRecursiveCreateLeafs(nestedJToken);
+                CreateLeaf(nestedJToken);
             }
         }
     }

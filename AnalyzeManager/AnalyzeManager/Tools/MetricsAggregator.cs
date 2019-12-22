@@ -9,14 +9,15 @@ namespace AnalyzeManager.Tools
         public List<MetricsModel> AggregateMetrics(List<BasicMetricsModel> basicMetrics, List<MetricsModel> volumeMetricsWithCommits)
         {
             var aggregatedMetrics = new List<MetricsModel>();
-
+            var ids = 0;
             foreach (var xmlMetricsModel in basicMetrics)
             {
                 if (volumeMetricsWithCommits.Any(e => e.FileFullName.Split("\\").Last().Split(".")[0].ToLower() == xmlMetricsModel.Name.ToLower()))
                 {
-                    var elementIndex = volumeMetricsWithCommits.FindIndex(e => e.FileFullName.Contains(xmlMetricsModel.Name));
+                    var elementIndex = volumeMetricsWithCommits.FindIndex(e => e.FileFullName.Split("\\").Last().Split(".")[0].ToLower() == xmlMetricsModel.Name.ToLower());
                     aggregatedMetrics.Add(new MetricsModel
                     {
+                        Id = ++ids,
                         AllCommitsNumber = volumeMetricsWithCommits[elementIndex].AllCommitsNumber,
                         Code = volumeMetricsWithCommits[elementIndex].Code,
                         Comment = volumeMetricsWithCommits[elementIndex].Comment,
@@ -32,7 +33,7 @@ namespace AnalyzeManager.Tools
                 }
             }
             var additionalInformationCreator = new AdditionalInformationCreator();
-            aggregatedMetrics = additionalInformationCreator.CalculateNumberBadQualityMetrics(aggregatedMetrics);
+            aggregatedMetrics = additionalInformationCreator.CalculateBadQualityMetrics(aggregatedMetrics);
             return aggregatedMetrics;
         }
     }

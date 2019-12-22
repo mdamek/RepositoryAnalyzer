@@ -7,16 +7,16 @@ namespace AnalyzeManager
 {
     public class GitProvider
     {
-        private readonly string _pathToLocalRepository;
+        private readonly string pathToRepository;
 
         public GitProvider(string pathToRepository)
         {
-            _pathToLocalRepository = pathToRepository;
+            this.pathToRepository = pathToRepository;
         }
 
         public List<MetricsModel> AddCommitsMetrics(List<MetricsModel> filesContainer)
         {
-            using (var repo = new Repository(_pathToLocalRepository))
+            using (var repo = new Repository(pathToRepository))
             {
                 var allCommits = repo.Commits.QueryBy(new CommitFilter {SortBy = CommitSortStrategies.Time});
                 foreach (var commit in allCommits)

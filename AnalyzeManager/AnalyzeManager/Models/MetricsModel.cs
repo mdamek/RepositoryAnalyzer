@@ -2,6 +2,7 @@
 {
     public class MetricsModel
     {
+        public int Id { get; set; }
         public string FileFullName { get; set; }
         public int Code { get; set; }
         public int Comment { get; set; }

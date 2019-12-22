@@ -26,10 +26,10 @@ namespace AnalyzeManager
 
             var additionalInformationCreator = new AdditionalInformationCreator();
             additionalInformationCreator.SaveToFileLimitValues(aggregatedMetrics);
-            additionalInformationCreator.SaveToFileRawDataJson(aggregatedMetrics);
+            additionalInformationCreator.SaveToFileAsJson(aggregatedMetrics);
 
             var treeStructureConverter = new TreeStructureConverter();
-            var treeStructureMetrics = treeStructureConverter.GenerateTreeObjectStructureFromPaths(aggregatedMetrics);
+            var treeStructureMetrics = treeStructureConverter.GenerateTreeStructureFromPaths(aggregatedMetrics);
             var jsonTreeStructureMetrics = JsonConvert.SerializeObject(treeStructureMetrics);
 
             File.WriteAllText(Directory.GetCurrentDirectory() + "\\OutputsFiles\\FinalStatisticsOutput.json", jsonTreeStructureMetrics);

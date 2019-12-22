@@ -15,55 +15,55 @@ namespace AnalyzeManager
                 code = new
                 {
                     range = new[] {0, allMetricsModels.Max(e => e.Code)},
-                    colors = new[] { "#00ff2b", "#ff0000" }
+                    colors = new[] { "#ffffff", "#ff0000" }
                 },
                 comment = new
                 {
                     range = new[] { 0, allMetricsModels.Max(e => e.Comment) },
-                    colors = new[] { "#00ff2b", "#ff0000" }
+                    colors = new[] { "#ffffff", "#ff0000" }
                 },
                 allcommitsnumber = new
                 {
                     range = new[] {0, allMetricsModels.Max(e => e.AllCommitsNumber)},
-                    colors = new[] { "#00ff2b", "#ff0000" }
-                },
-                maintainabilityindex = new
-                {
-                    range = new[] { 0, 100 },
-                    colors = new[] { "#ff0000", "#00ff2b" }
-                },
-                cyclomaticcomplexity = new
-                {
-                    range = new[] { 0, 10 },
-                    colors = new[] { "#00ff2b", "#ff0000" }
-                },
-                classcoupling = new
-                {
-                    range = new[] { 0, 80 },
-                    colors = new[] { "#ff0000", "#fff400", "#00ff2b" }
-                },
-                depthofinheritance = new
-                {
-                    range = new[] { 0, 6 },
-                    colors = new[] { "#00ff2b", "#ff0000" }
+                    colors = new[] { "#ffffff", "#ff0000" }
                 },
                 badqualitymetricsnumber = new
                 {
                     range = new[] { 0, allMetricsModels.Max(e => e.BadQualityMetricsNumber) },
-                    colors = new[] { "#00ff2b", "#ff0000" }
+                    colors = new[] { "#ffffff", "#ff0000" }
+                },
+                maintainabilityindex = new
+                {
+                    range = new[] { 0, 100 },
+                    colors = new[] { "#ff0000", "#ffffff" }
+                },
+                cyclomaticcomplexity = new
+                {
+                    range = new[] { 0, 10 },
+                    colors = new[] { "#ffffff", "#ff0000" }
+                },
+                classcoupling = new
+                {
+                    range = new[] { 0, 80 },
+                    colors = new[] { "#ffffff", "#ff0000" }
+                },
+                depthofinheritance = new
+                {
+                    range = new[] { 0, 6 },
+                    colors = new[] { "#ffffff", "#ff0000" }
                 }
             };
             var jsonValues = JsonConvert.SerializeObject(compartmentValues);
             File.WriteAllText(Directory.GetCurrentDirectory() + "\\AnalyzeReport\\CompartmentValues.json", jsonValues);
         }
 
-        public void SaveToFileRawDataJson(List<MetricsModel> allMetricsModels)
+        public void SaveToFileAsJson(List<MetricsModel> allMetricsModels)
         {
             var jsonList = JsonConvert.SerializeObject(allMetricsModels);
             File.WriteAllText(Directory.GetCurrentDirectory() + "\\AnalyzeReport\\MetricsRawToArray.json", jsonList);
         }
 
-        public List<MetricsModel> CalculateNumberBadQualityMetrics(List<MetricsModel> finalEntities)
+        public List<MetricsModel> CalculateBadQualityMetrics(List<MetricsModel> finalEntities)
         {
             foreach (var finalEntity in finalEntities)
             {

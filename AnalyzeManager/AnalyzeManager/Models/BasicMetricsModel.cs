@@ -7,6 +7,5 @@
         public int CyclomaticComplexity { get; set; }
         public int ClassCoupling { get; set; }
         public int DepthOfInheritance { get; set; }
-        public int ExecutableLines { get; set; }
     }
 }

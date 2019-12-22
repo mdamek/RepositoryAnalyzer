@@ -34,12 +34,15 @@ namespace AnalyzeManager.Providers
                         childNode.First(e => e.Attributes["Name"].Value == "CyclomaticComplexity").Attributes["Value"].Value),
                     DepthOfInheritance = int.Parse(
                         childNode.First(e => e.Attributes["Name"].Value == "DepthOfInheritance").Attributes["Value"].Value),
-                    ExecutableLines = int.Parse(
-                        childNode.First(e => e.Attributes["Name"].Value == "ExecutableLines").Attributes["Value"].Value),
                 });
             }
 
-            return basicMetrics;
+
+            var singleValues = basicMetrics.GroupBy(x => x.Name)
+                .Where(group => group.Count() > 1)
+                .Select(group => group.Key);
+
+            return singleValues.Select(singleValue => basicMetrics.Find(e => e.Name == singleValue)).ToList();
         }
     }
 }

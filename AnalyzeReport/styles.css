@@ -5,7 +5,12 @@ body {
 
 .node--hover circle {
   stroke: #000;
-  stroke-width: 1.2px;
+  stroke-width: 1px;
+}
+
+.node--hover--big circle {
+  stroke: #000;
+  stroke-width: 2px;
 }
 
 .btn-group button {

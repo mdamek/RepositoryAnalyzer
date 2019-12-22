@@ -6,7 +6,6 @@ namespace AnalyzeManager
 {
     public class VolumeMetricsProvider
     {
-        private List<MetricsModel> FileCodeStatistics { get; set; }
         private string PathToVolumeMetrics { get; }
 
         public VolumeMetricsProvider(string pathToVolumeMetrics)
