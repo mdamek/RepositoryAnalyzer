@@ -136,6 +136,7 @@ $(document).ready(function() {
 
   $("#rawDataTable").DataTable({
     data: rawData,
+    lengthChange: false,
     pageLength: 25,
     columns: [
       {
@@ -183,14 +184,14 @@ $(document).ready(function() {
 
   $("#globalDataTable").DataTable({
     data: globalValues,
-    "searching": false,
-    "paging": false,
-    "ordering": false,
-    "info": false,
+    searching: false,
+    paging: false,
+    ordering: false,
+    info: false,
     columns: [
       {
-      title: "Value",
-      data: "name"
+        title: "Value",
+        data: "name"
       },
       {
         title: "LOC",
@@ -249,11 +250,3 @@ $(document).ready(function() {
     });
   }
 });
-
-function go(value) {
-  try {
-    drawCirclePacking(value);
-  } catch (error) {
-    console.log(error);
-  }
-}

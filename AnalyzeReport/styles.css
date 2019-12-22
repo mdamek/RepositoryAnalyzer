@@ -14,8 +14,8 @@ body {
 }
 
 .btn-group button {
-  background-color: #4CAF50;
-  border: 1px solid green;
+  background-color: #000080;
+  border: 1px solid #1e90ff;
   color: white;
   padding: 10px 10px;
   cursor: pointer;
@@ -33,7 +33,7 @@ body {
 }
 
 .btn-group button:hover {
-  background-color: #3e8e41;
+  background-color: #191970;
 }
 
 .column {

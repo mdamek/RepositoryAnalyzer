@@ -1,43 +1,116 @@
-<!doctype html>
+<!DOCTYPE html>
 
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <title>AnalyzeReport</title>
-  <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
-  <script src="https://d3js.org/d3.v5.js"></script>
-  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
-  <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
-  <script src="designer.js"></script>
-  <link rel="stylesheet" href="styles.css">
-</head>
+  <head>
+    <meta charset="utf-8" />
+    <title>AnalyzeReport</title>
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="https://d3js.org/d3.v5.js"></script>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css"
+    />
+    <script
+      type="text/javascript"
+      charset="utf8"
+      src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"
+    ></script>
+    <script src="designer.js"></script>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
 
-<body onload="go('code')">
+  <body onload="go('code')">
     <div class="row">
-        <div class="column">
-            <svg id="mainChart" width="900" height="900">
-                <g></g>
-            </svg>
-            <div id="actualValues" style=" left: 0px; bottom: 0px; border-style: solid; visibility: hidden;">
-                <label id="actualSelectedId" style="font-weight:bold"></label>
-                <label id="actualSelectedName" style="font-weight:bold"></label>
-                <label id="actualSelectedValue" style="font-weight:bold"></label>
-            </div>
-        </div>
-        <div class="column">
-            <div id="buttons" class="btn-group">
-                <button id="codeLinesButton" class="decidingButton active" onclick="doStatisticsBy('code')" type="button">Code lines</button>
-                <button id="commentsButton" class="decidingButton" onclick="doStatisticsBy('comment')" type="button">Comments</button>
-                <button id="totalCommitsButton" class="decidingButton" onclick="doStatisticsBy('allcommitsnumber')" type="button">Commits - hotspots</button>
-                <button id="maintainabilityIndexButton" class="decidingButton" onclick="go('maintainabilityindex')" type="button">Maintainability index</button>
-                <button id="cyclomaticComplexityButton" class="decidingButton" onclick="doStatisticsBy('cyclomaticcomplexity')" type="button">Cyclomatic complexity</button>
-                <button id="classCouplingButton" class="decidingButton" onclick="doStatisticsBy('classcoupling')" type="button">Class coupling</button>
-                <button id="depthOfInheritanceButton" class="decidingButton" onclick="doStatisticsBy('depthofinheritance')" type="button">Depth of inheritance</button>
-                <button id="aggregationButton" class="decidingButton" onclick="doStatisticsBy('badqualitymetricsnumber')" type="button">Aggregation</button>
-            </div>
-            <table id="rawDataTable" class="hover compact order-column row-border stripe"></table>
-            <table id="globalDataTable"  class="hover compact row-border stripe"></table>
+      <div class="column">
+        <svg id="mainChart" width="900" height="900">
+          <g></g>
+        </svg>
+        <div
+          id="actualValues"
+          style=" left: 0px; bottom: 0px; border-style: solid; visibility: hidden;"
+        >
+          <label id="actualSelectedId" style="font-weight:bold"></label>
+          <label id="actualSelectedName" style="font-weight:bold"></label>
+          <label id="actualSelectedValue" style="font-weight:bold"></label>
         </div>
       </div>
-</body>
+      <div class="column">
+        <div id="buttons" class="btn-group">
+          <button
+            id="codeLinesButton"
+            class="decidingButton active"
+            onclick="doStatisticsBy('code')"
+            type="button"
+          >
+            Code lines
+          </button>
+          <button
+            id="commentsButton"
+            class="decidingButton"
+            onclick="doStatisticsBy('comment')"
+            type="button"
+          >
+            Comments
+          </button>
+          <button
+            id="totalCommitsButton"
+            class="decidingButton"
+            onclick="doStatisticsBy('allcommitsnumber')"
+            type="button"
+          >
+            Commits - hotspots
+          </button>
+          <button
+            id="maintainabilityIndexButton"
+            class="decidingButton"
+            onclick="go('maintainabilityindex')"
+            type="button"
+          >
+            Maintainability index
+          </button>
+          <button
+            id="cyclomaticComplexityButton"
+            class="decidingButton"
+            onclick="doStatisticsBy('cyclomaticcomplexity')"
+            type="button"
+          >
+            Cyclomatic complexity
+          </button>
+          <button
+            id="classCouplingButton"
+            class="decidingButton"
+            onclick="doStatisticsBy('classcoupling')"
+            type="button"
+          >
+            Class coupling
+          </button>
+          <button
+            id="depthOfInheritanceButton"
+            class="decidingButton"
+            onclick="doStatisticsBy('depthofinheritance')"
+            type="button"
+          >
+            Depth of inheritance
+          </button>
+          <button
+            id="aggregationButton"
+            class="decidingButton"
+            onclick="doStatisticsBy('badqualitymetricsnumber')"
+            type="button"
+          >
+            Aggregation
+          </button>
+        </div>
+        <table
+          id="rawDataTable"
+          class="hover compact order-column row-border stripe"
+        ></table>
+        <table
+          id="globalDataTable"
+          class="hover compact row-border stripe"
+        ></table>
+      </div>
+    </div>
+  </body>
 </html>
