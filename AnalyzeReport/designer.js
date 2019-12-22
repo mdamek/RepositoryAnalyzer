@@ -1,5 +1,6 @@
 var actualHierarchy;
 var node;
+
 function drawCirclePacking(hierarchyBy) {
   actualHierarchy = hierarchyBy;
   d3.selectAll("g > *").remove();
@@ -116,6 +117,7 @@ function drawCirclesPacks(value, minHierarchyValue, maxHierarchyValue) {
 
 $(document).ready(function() {
   var rawData;
+  var globalValues;
   $.ajax({
     url: "MetricsRawToArray.json",
     method: "GET",
@@ -124,11 +126,16 @@ $(document).ready(function() {
     rawData = response;
   });
 
+  $.ajax({
+    url: "GlobalValues.json",
+    method: "GET",
+    async: false
+  }).success(function(response) {
+    globalValues = response;
+  });
+
   $("#rawDataTable").DataTable({
     data: rawData,
-    createdRow: function(row, data, index) {
-      $("td:first", row).attr("id", data.id);
-    },
     pageLength: 25,
     columns: [
       {
@@ -170,6 +177,52 @@ $(document).ready(function() {
       {
         title: "All",
         data: "BadQualityMetricsNumber"
+      }
+    ]
+  });
+
+  $("#globalDataTable").DataTable({
+    data: globalValues,
+    "searching": false,
+    "paging": false,
+    "ordering": false,
+    "info": false,
+    columns: [
+      {
+      title: "Value",
+      data: "name"
+      },
+      {
+        title: "LOC",
+        data: "LOC"
+      },
+      {
+        title: "Comments",
+        data: "Comments"
+      },
+      {
+        title: "Commits",
+        data: "Commits"
+      },
+      {
+        title: "MI",
+        data: "MI"
+      },
+      {
+        title: "Cyclo",
+        data: "Cyclo"
+      },
+      {
+        title: "CC",
+        data: "CC"
+      },
+      {
+        title: "DiT",
+        data: "DiT"
+      },
+      {
+        title: "All",
+        data: "All"
       }
     ]
   });

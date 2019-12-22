@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Xml;
 using AnalyzeManager.Models;
@@ -39,10 +40,11 @@ namespace AnalyzeManager.Providers
 
 
             var singleValues = basicMetrics.GroupBy(x => x.Name)
-                .Where(group => group.Count() > 1)
-                .Select(group => group.Key);
+                .Select(group => group.First())
+                .ToList();
 
-            return singleValues.Select(singleValue => basicMetrics.Find(e => e.Name == singleValue)).ToList();
+
+            return singleValues;
         }
     }
 }

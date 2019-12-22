@@ -12,6 +12,7 @@ package-lock.json
 AnalyzeReport/CompartmentValues.json
 CompartmentValues.json
 MetricsRawToArray.json
+GlobalValues.json
 
 OutputsFiles/
 AnalyzeManager/build

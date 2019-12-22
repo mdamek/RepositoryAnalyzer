@@ -1,4 +1,5 @@
-﻿using AnalyzeManager.Models;
+﻿using System;
+using AnalyzeManager.Models;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 using System.IO;
@@ -55,6 +56,49 @@ namespace AnalyzeManager
             };
             var jsonValues = JsonConvert.SerializeObject(compartmentValues);
             File.WriteAllText(Directory.GetCurrentDirectory() + "\\AnalyzeReport\\CompartmentValues.json", jsonValues);
+
+            var globalValues = new dynamic[]
+            {
+                new
+                {
+                    name = "Min",
+                    LOC = allMetricsModels.Min(e => e.Code),
+                    Comments = allMetricsModels.Min(e => e.Comment),
+                    Commits = allMetricsModels.Min(e => e.AllCommitsNumber),          
+                    MI = allMetricsModels.Min(e => e.MaintainabilityIndex),
+                    Cyclo = allMetricsModels.Min(e => e.CyclomaticComplexity),
+                    CC = allMetricsModels.Min(e => e.ClassCoupling),
+                    DiT = allMetricsModels.Min(e => e.DepthOfInheritance),
+                    All = allMetricsModels.Min(e => e.BadQualityMetricsNumber)
+                },
+                new
+                {
+                    name = "Max",
+                    LOC = allMetricsModels.Max(e => e.Code),
+                    Comments = allMetricsModels.Max(e => e.Comment),
+                    Commits = allMetricsModels.Max(e => e.AllCommitsNumber),
+                    MI = allMetricsModels.Max(e => e.MaintainabilityIndex),
+                    Cyclo = allMetricsModels.Max(e => e.CyclomaticComplexity),
+                    CC = allMetricsModels.Max(e => e.ClassCoupling),
+                    DiT = allMetricsModels.Max(e => e.DepthOfInheritance),
+                    All = allMetricsModels.Max(e => e.BadQualityMetricsNumber),
+                },
+                new
+                {
+                    name = "Average",
+                    LOC = Math.Round(allMetricsModels.Average(e => e.Code), 2),
+                    Comments = Math.Round(allMetricsModels.Average(e => e.Comment), 2),
+                    Commits = Math.Round(allMetricsModels.Average(e => e.AllCommitsNumber), 2),
+                    MI = Math.Round(allMetricsModels.Average(e => e.MaintainabilityIndex), 2),
+                    Cyclo = Math.Round(allMetricsModels.Average(e => e.CyclomaticComplexity), 2),
+                    CC = Math.Round(allMetricsModels.Average(e => e.ClassCoupling), 2),
+                    DiT = Math.Round(allMetricsModels.Average(e => e.DepthOfInheritance), 2),
+                    All = Math.Round(allMetricsModels.Average(e => e.BadQualityMetricsNumber), 2)
+                }
+            };
+
+                var jsonGlobalValues = JsonConvert.SerializeObject(globalValues);
+                File.WriteAllText(Directory.GetCurrentDirectory() + "\\AnalyzeReport\\GlobalValues.json", jsonGlobalValues);
         }
 
         public void SaveToFileAsJson(List<MetricsModel> allMetricsModels)

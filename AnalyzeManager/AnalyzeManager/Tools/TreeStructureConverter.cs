@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using AnalyzeManager.Models;
 using Newtonsoft.Json;
@@ -53,7 +54,8 @@ namespace AnalyzeManager.Tools
             if (!jToken["children"].Children().Any())
             {
                 var name = jToken["name"];
-                var dataToAppend = Metrics.First(e => e.FileFullName.Contains(name.ToString()));
+                var dataToAppend = Metrics.FirstOrDefault(e => e.FileFullName.Split("\\").Last().ToLower() == name.ToString().ToLower());
+                if(dataToAppend == null) throw new ArgumentException("Impossible operations");
 
                 jToken["children"].Parent.Remove();
                 foreach (var property in dataToAppend.GetType().GetProperties())
